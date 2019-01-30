@@ -5,7 +5,9 @@ properties([ parameters([
 
 node{
 stage('Checkout code') {
-checkout scm
+checkout([
+      $class: 'GitSCM', branches: [[name: '*/terraform']],
+      userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git']]])
 }
 stage ('OPERATION') {
 withCredentials([[
