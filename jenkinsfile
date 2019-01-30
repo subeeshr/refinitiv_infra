@@ -1,0 +1,39 @@
+properties([ parameters([
+  choice( choices: ['build', 'destroy'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
+  choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT')
+]), pipelineTriggers([]) ])
+
+node{
+stage ('OPERATION') {
+withCredentials([[
+$class: "AmazonWebServicesCredentialsBinding",
+credentialsId: "aws-creds"]]) {
+sh '''#!/bin/bash
+set -euo pipefail
+export PATH=$PATH:/usr/local/bin
+if [ "${ENVIRONMENT}" == "DEV" ]; then
+  ENV="DEV"
+  cd test/refinitiv_infra/dev/
+elif [ "${ENVIRONMENT}" == "QA" ]; then
+ENV="QA"
+cd test/refinitiv_infra/qa/
+else
+  echo "ENV not recognised"
+fi
+if [ "${OPERATION}" == "build" ]; then
+  ACTION="Building"
+  TERRAFORM_COMMAND="apply"
+elif [ "${OPERATION}" == "destroy" ]; then
+  ACTION="Destroying"
+  TERRAFORM_COMMAND="destroy"
+else
+  echo "ACTION not recognised"
+  exit 1
+fi
+echo "$ACTION $ENV on branch MASTER"
+terraform init -no-color
+terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
+'''
+}
+}
+}
