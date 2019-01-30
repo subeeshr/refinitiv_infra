@@ -62,7 +62,6 @@ enumerate_dirs() {
 loop_projects() {
   BASEDIR="$(pwd)"
   for PROJ in terraform; do
-    cd "${PROJ}"
     enumerate_dirs "${PROJ}"
     cd "${BASEDIR}"
   done
