@@ -20,8 +20,6 @@ if [ "${ENVIRONMENT}" == "DEV" ]; then
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
 cd $ENV
-else
-  echo "ENV not recognised"
 fi
 if [ "${OPERATION}" == "build" ]; then
   ACTION="Building"
