@@ -19,7 +19,7 @@ if [ "${ENVIRONMENT}" == "DEV" ]; then
   cd $ENV
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
-cd cd $ENV
+cd $ENV
 else
   echo "ENV not recognised"
 fi
