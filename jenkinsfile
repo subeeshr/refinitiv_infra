@@ -18,10 +18,10 @@ set -euo pipefail
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV="DEV"
-  cd refinitiv_infra/${ENV}
+  cd dev
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
-cd ${ENV}
+cd qa
 fi
 if [ "${OPERATION}" == "build" ]; then
   ACTION="Building"
@@ -34,7 +34,7 @@ else
   exit 1
 fi
 echo "$ACTION $ENV on branch TERRAFORM"
-cd ${ENV}
+cd dev
 rm -fv ${ENV}/.terraform/terraform.tfstate
 sh setup_remote_state.sh
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
