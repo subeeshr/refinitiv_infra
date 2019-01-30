@@ -16,10 +16,10 @@ set -euo pipefail
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV="DEV"
-  cd $ENV
+  cd DEV/
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
-cd $ENV
+cd QA/
 fi
 if [ "${OPERATION}" == "build" ]; then
   ACTION="Building"
