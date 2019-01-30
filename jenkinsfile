@@ -38,6 +38,7 @@ cd ../
 rm -fv env-${ENV}/.terraform/terraform.tfstate
 chmod 755 setup_remote_state.sh
 ./setup_remote_state.sh
+cd env-${ENV}
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 '''
 }
