@@ -2,8 +2,8 @@
 readonly ARGS="$@"
 readonly RESTORE='\033[0m'
 readonly RED='\033[00;31m'
-readonly TERRAFORM_RC="$HOME/.terraformrc"
-readonly TERRAFORM_PLUGIN_CACHE="$HOME/.terraform.d/plugin-cache"
+readonly TERRAFORM_RC="$PWD/.terraformrc"
+readonly TERRAFORM_PLUGIN_CACHE="$PWD/.terraform.d/plugin-cache"
 
 setup_terraform_plugin_cache() {
   if [[ ! -d "${TERRAFORM_PLUGIN_CACHE}" ]]; then
@@ -23,7 +23,7 @@ setup_terraform_remote() {
 
   check_for_local_tfstate_files "${ENV}" "${PROJ}"
   cd "${ENV}"
-  terraform0117 init -backend=true -get=true -input=false -backend-config=remote_state.tfvars
+  terraform init -backend=true -get=true -input=false -backend-config=remote_state.tfvars
   cd -
 }
 
@@ -49,7 +49,7 @@ check_for_local_tfstate_files() {
 enumerate_dirs() {
   PROJ=$1
   echo "Enumerating Dirs in ${PROJ}"
-  for DIR in $(find . -type d -name "env-*" -exec basename {} \;); do
+  for DIR in $(find . -type d -name "*" -exec basename {} \;); do
     if [ -f "${DIR}/.terraform/terraform.tfstate" ]; then
       echo -e "** ${DIR}\t\tAlready set-up\n"
     else
@@ -61,7 +61,7 @@ enumerate_dirs() {
 
 loop_projects() {
   BASEDIR="$(pwd)"
-  for PROJ in smi smibuild transit; do
+  for PROJ in refinitiv_infra; do
     cd "${PROJ}"
     enumerate_dirs "${PROJ}"
     cd "${BASEDIR}"
