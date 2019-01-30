@@ -30,8 +30,10 @@ else
   echo "ACTION not recognised"
   exit 1
 fi
-echo "$ACTION $ENV on branch MASTER"
-terraform init -no-color
+echo "$ACTION $ENV on branch TERRAFORM"
+rm -fv ${ENV}/.terraform/terraform.tfstate
+./setup_remote_state.sh
+
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 '''
 }
