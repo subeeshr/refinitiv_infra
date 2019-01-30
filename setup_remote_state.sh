@@ -23,7 +23,7 @@ setup_terraform_remote() {
 
   check_for_local_tfstate_files "${ENV}" "${PROJ}"
   cd "${ENV}"
-  terraform init -backend=true -get=true -input=false -backend-config=remote_state.tfvars
+  terraform init -backend=true -get=true -input=false -backend-config="${ENV}"/remote_state.tfvars
   cd -
 }
 
