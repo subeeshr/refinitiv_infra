@@ -18,11 +18,9 @@ set -euo pipefail
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV="DEV"
-  //git clone https://github.com/subeeshr/refinitiv_infra.git
   cd DEV/
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
-//git clone https://github.com/subeeshr/refinitiv_infra.git
 cd QA/
 fi
 if [ "${OPERATION}" == "build" ]; then
