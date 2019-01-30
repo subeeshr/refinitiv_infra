@@ -16,10 +16,10 @@ set -euo pipefail
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV="DEV"
-  cd refinitiv_infra/dev/
+  cd $ENV
 elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="QA"
-cd refinitiv_infra/qa/
+cd cd $ENV
 else
   echo "ENV not recognised"
 fi
