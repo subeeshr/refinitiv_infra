@@ -4,6 +4,22 @@ properties([ parameters([
 ]), pipelineTriggers([]) ])
 
 node{
+stage ('checkout_scm') {
+checkout scm: [
+                        $class: 'GitSCM',
+                        branches: 'terraform',
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'SubmoduleOption',
+                                      disableSubmodules: false,
+                                      parentCredentials: false,
+                                      recursiveSubmodules: true,
+                                      reference: '',
+                                      trackingSubmodules: false]],
+                        submoduleCfg: [],
+                        userRemoteConfigs: scm.userRemoteConfigs
+                ]
+
+}
 stage ('OPERATION') {
 withCredentials([[
 $class: "AmazonWebServicesCredentialsBinding",
