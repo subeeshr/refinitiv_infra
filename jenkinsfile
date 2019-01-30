@@ -8,7 +8,14 @@ stage ('checkout_scm') {
 checkout scm: [
                         $class: 'GitSCM',
                         branches: 'terraform',
-                        doGenerateSubmoduleConfigurations: false
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'SubmoduleOption',
+                                      disableSubmodules: false,
+                                      parentCredentials: false,
+                                      recursiveSubmodules: true,
+                                      reference: '',
+                                      trackingSubmodules: false]],
+                        submoduleCfg: []
                 ]
 
 }
