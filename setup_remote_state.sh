@@ -61,7 +61,7 @@ enumerate_dirs() {
 
 loop_projects() {
   BASEDIR="$(pwd)"
-  for PROJ in ams_dev_replica; do
+  for PROJ in refinitiv_infra; do
     cd "${PROJ}"
     enumerate_dirs "${PROJ}"
     cd "${BASEDIR}"
