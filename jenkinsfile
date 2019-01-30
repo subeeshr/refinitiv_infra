@@ -34,7 +34,7 @@ else
   exit 1
 fi
 echo "$ACTION $ENV on branch TERRAFORM"
-rm -fv .terraform/terraform.tfstate
+rm -fv /.terraform/terraform.tfstate
 chmod 755 setup_remote_state.sh
 ./setup_remote_state.sh
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
