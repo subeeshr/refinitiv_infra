@@ -23,7 +23,3 @@ variable "refinitiv_ami_name" { default = "refinitiv-ami" }
 variable "instance_count" { default = "1"}
 variable "key_name" {default = "fnrdev"}
 #variable "subnet_id" {}
-variable "public_key_path" {
-  description = "Enter the path to the SSH Public Key to add to AWS."
-  default = "~/.ssh/fnrdev.pub"
-}
