@@ -17,11 +17,11 @@ sh '''#!/bin/bash
 set -euo pipefail
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
-  ENV="DEV"
-  cd dev
+  ENV="env-dev"
+  cd env-dev
 elif [ "${ENVIRONMENT}" == "QA" ]; then
-ENV="QA"
-cd qa
+ENV="env-qa"
+cd env-qa
 fi
 if [ "${OPERATION}" == "build" ]; then
   ACTION="Building"
@@ -37,7 +37,7 @@ echo "$ACTION $ENV on branch TERRAFORM"
 cd ../
 rm -fv /.terraform/terraform.tfstate
 chmod 755 setup_remote_state.sh
-./setup_remote_state.sh
+./setup_remote_state.sh "{$ENV}"
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 '''
 }
