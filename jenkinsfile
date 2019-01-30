@@ -33,10 +33,10 @@ else
   echo "ACTION not recognised"
   exit 1
 fi
-chmod 755 setup_remote_state.sh
 echo "$ACTION $ENV on branch $BRANCH"
 cd ../
 rm -fv env-${ENV}/.terraform/terraform.tfstate
+chmod 755 setup_remote_state.sh
 ./setup_remote_state.sh
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 '''
