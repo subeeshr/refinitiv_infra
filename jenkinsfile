@@ -10,6 +10,7 @@ checkout([
       userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git']]])
 }
 stage ('OPERATION') {
+steps {
 withCredentials([[
 $class: "AmazonWebServicesCredentialsBinding",
 credentialsId: "aws-creds"]]) {
@@ -42,6 +43,7 @@ chmod 755 setup_remote_state.sh
 cd env-${ENV}
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 '''
+}
 }
 }
 post {
