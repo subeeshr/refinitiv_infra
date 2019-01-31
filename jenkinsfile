@@ -54,10 +54,10 @@ terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 }
 post {
 success {
-  slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
+  slackSend (color: '#00FF00', message: "${env.OPERATION} SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
 }
 failure {
-  slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
+  slackSend (color: '#FF0000', message: "${env.OPERATION} FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
 }
 }
 }
