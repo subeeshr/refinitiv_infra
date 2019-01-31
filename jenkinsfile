@@ -10,10 +10,10 @@ checkout([
       userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git']]])
 }
 stage ('OPERATION') {
-steps {
 withCredentials([[
 $class: "AmazonWebServicesCredentialsBinding",
 credentialsId: "aws-creds"]]) {
+steps {
 sh '''#!/bin/bash
 set -euo pipefail
 export PATH=$PATH:/usr/local/bin
