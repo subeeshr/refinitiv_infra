@@ -3,7 +3,7 @@ properties([ parameters([
   choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT')
 ]), pipelineTriggers([]) ])
 
-node{
+node {
 stage('Checkout code') {
 checkout([
       $class: 'GitSCM', branches: [[name: '*/terraform']],
@@ -46,16 +46,16 @@ terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 }
 }
 stage ('Start') {
-  // send build started notifications
   slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-post {
-    success {
+  }
+stage ('Success') {
+success {
       slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
-
-    failure {
+    }
+stage ('Failure') {
+failure {
       slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
     }
   }
-}
