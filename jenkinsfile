@@ -41,14 +41,13 @@ chmod 755 setup_remote_state.sh
 ./setup_remote_state.sh
 cd env-${ENV}
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
-if [ currentBuild.currentResult == 'SUCCESS' ]; then
-slackSend (channel: '#devops', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-elseif [ currentBuild.currentResult == 'FAILURE' ]; then
-slackSend (channel: '#devops', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-else
-exit 1
-fi
 '''
+if(currentBuild.currentResult == 'SUCCESS') {
+slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+}
+else if ((currentBuild.currentResult == 'FAILURE') && buildChanged){
+slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+}
 }
 }
 }
