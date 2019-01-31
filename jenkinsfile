@@ -42,7 +42,6 @@ chmod 755 setup_remote_state.sh
 
 cd env-${ENV}
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
-slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 '''
 }
 }
