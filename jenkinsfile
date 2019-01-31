@@ -42,13 +42,11 @@ chmod 755 setup_remote_state.sh
 
 cd env-${ENV}
 terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
+slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
 '''
 }
 }
-stage ('Start') {
-  slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-  }
-stage ('Success') {
+stage ('notifyslack') {
       if(currentBuild.result == 'SUCCESS') {
       slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
       }
