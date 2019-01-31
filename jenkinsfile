@@ -15,6 +15,7 @@ $class: "AmazonWebServicesCredentialsBinding",
 credentialsId: "aws-creds"]]) {
 sh '''#!/bin/bash
 set -euo pipefail
+which jq
 export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV="dev"
