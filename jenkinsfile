@@ -28,10 +28,10 @@ agent any
             ENV="qa"
             cd env-qa
             fi
-            if [ "${OPERATION}" == "build" ]; then
+            if [ "${OPERATION}" == "BUILD" ]; then
               ACTION="Building"
               TERRAFORM_COMMAND="apply"
-            elif [ "${OPERATION}" == "destroy" ]; then
+            elif [ "${OPERATION}" == "BUILD" ]; then
               ACTION="Destroying"
               TERRAFORM_COMMAND="destroy"
             else
