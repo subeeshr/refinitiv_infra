@@ -1,6 +1,6 @@
 properties([ parameters([
-  choice( choices                : ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
-  choice( choices                : ['DEV', 'QA'], description       : 'Select the environment', name          : 'ENVIRONMENT')
+  choice( choices: ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
+  choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT')
 ]), pipelineTriggers([]) ])
 
 pipeline {
@@ -9,15 +9,15 @@ agent any
       stage('Checkout code') {
           steps{
               checkout([
-                $class           : 'GitSCM', branches               : [[name                                  : '*/terraform']],
-                userRemoteConfigs: [[url                            : 'https                                  ://github.com/subeeshr/refinitiv_infra.git']]])
+                $class : 'GitSCM', branches : [[name: '*/terraform']],
+                userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git']]])
       }
   }
        stage ('OPERATION') {
           steps {
 withCredentials([[
-$class                           : "AmazonWebServicesCredentialsBinding",
-credentialsId                    : "aws-creds"]]) {
+$class : "AmazonWebServicesCredentialsBinding",
+credentialsId : "aws-creds"]]) {
 sh '''#!/bin/bash
 set -euo pipefail
 export PATH = $PATH              : /usr/local/bin
