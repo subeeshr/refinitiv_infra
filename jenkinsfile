@@ -1,5 +1,5 @@
 properties([ parameters([
-  choice( choices: ['build', 'destroy'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
+  choice( choices: ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
   choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT')
 ]), pipelineTriggers([]) ])
 
@@ -29,10 +29,10 @@ elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV="qa"
 cd env-qa
 fi
-if [ "${OPERATION}" == "build" ]; then
+if [ "${OPERATION}" == "BUILD" ]; then
   ACTION="Building"
   TERRAFORM_COMMAND="apply"
-elif [ "${OPERATION}" == "destroy" ]; then
+elif [ "${OPERATION}" == "DESTROY" ]; then
   ACTION="Destroying"
   TERRAFORM_COMMAND="destroy"
 else
