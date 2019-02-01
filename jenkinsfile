@@ -1,7 +1,6 @@
 properties([ parameters([
   choice( choices: ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
   choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT'),
-  choice( choices: ['terraform', 'master'], description: 'Build branch', name: 'BRANCH' )
 ]), pipelineTriggers([]) ])
 
 pipeline {
@@ -22,10 +21,10 @@ credentialsId : "aws-creds"]]) {
 sh '''#!/bin/bash
 set -euo pipefail
 export PATH=$PATH:/usr/local/bin
-if [ "${ENVIRONMENT}" == "DEV" && "${BRANCH}" == "terraform" ]; then
+if [ "${ENVIRONMENT}" == "DEV" ]; then
   ENV = "dev"
   cd env-dev
-elif [ "${ENVIRONMENT}" == "QA" && "${BRANCH}" == "terraform" ]; then
+elif [ "${ENVIRONMENT}" == "QA" ]; then
 ENV = "qa"
 cd env-qa
 fi
