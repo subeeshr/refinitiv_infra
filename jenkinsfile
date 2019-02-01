@@ -21,7 +21,7 @@ $class : "AmazonWebServicesCredentialsBinding",
 credentialsId : "aws-creds"]]) {
 sh '''#!/bin/bash
 set -euo pipefail
-export PATH = $PATH              : /usr/local/bin
+export PATH=$PATH:/usr/local/bin
 if [ "${ENVIRONMENT}" == "DEV" && "${BRANCH}" == "terraform" ]; then
   ENV = "dev"
   cd env-dev
