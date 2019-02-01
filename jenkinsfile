@@ -1,40 +1,39 @@
 properties([ parameters([
-  choice( choices: ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
-  choice( choices: ['DEV', 'QA'], description: 'Select the environment', name: 'ENVIRONMENT')
+  choice( choices                : ['BUILD', 'DESTROY'], description: 'Do you want to build or destroy?', name: 'OPERATION'),
+  choice( choices                : ['DEV', 'QA'], description       : 'Select the environment', name          : 'ENVIRONMENT')
 ]), pipelineTriggers([]) ])
 
 pipeline {
-
 agent any
-stages {
-stage('Checkout code') {
-steps{
-checkout([
-      $class: 'GitSCM', branches: [[name: '*/terraform']],
-      userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git']]])
-}
-}
-stage ('OPERATION') {
-steps {
+  stages {
+      stage('Checkout code') {
+          steps{
+              checkout([
+                $class           : 'GitSCM', branches               : [[name                                  : '*/terraform']],
+                userRemoteConfigs: [[url                            : 'https                                  ://github.com/subeeshr/refinitiv_infra.git']]])
+      }
+  }
+       stage ('OPERATION') {
+          steps {
 withCredentials([[
-$class: "AmazonWebServicesCredentialsBinding",
-credentialsId: "aws-creds"]]) {
+$class                           : "AmazonWebServicesCredentialsBinding",
+credentialsId                    : "aws-creds"]]) {
 sh '''#!/bin/bash
 set -euo pipefail
-export PATH=$PATH:/usr/local/bin
-if [ "${ENVIRONMENT}" == "DEV" ]; then
-  ENV="dev"
+export PATH = $PATH              : /usr/local/bin
+if [ "${ENVIRONMENT}" = = "DEV" ]; then
+  ENV = "dev"
   cd env-dev
-elif [ "${ENVIRONMENT}" == "QA" ]; then
-ENV="qa"
+elif [ "${ENVIRONMENT}" = = "QA" ]; then
+ENV = "qa"
 cd env-qa
 fi
-if [ "${OPERATION}" == "BUILD" ]; then
-  ACTION="Building"
-  TERRAFORM_COMMAND="apply"
-elif [ "${OPERATION}" == "DESTROY" ]; then
-  ACTION="Destroying"
-  TERRAFORM_COMMAND="destroy"
+if [ "${OPERATION}" = = "BUILD" ]; then
+  ACTION = "Building"
+  TERRAFORM_COMMAND = "apply"
+elif [ "${OPERATION}" = = "DESTROY" ]; then
+  ACTION = "Destroying"
+  TERRAFORM_COMMAND = "destroy"
 else
   echo "ACTION not recognised"
   exit 1
@@ -54,10 +53,10 @@ terraform ${TERRAFORM_COMMAND} -no-color -auto-approve
 }
 post {
 success {
-  slackSend (color: '#00FF00', message: "${env.OPERATION} SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
+slackSend (color : '#00FF00', message : "${env.OPERATION} SUCCESSFUL : JOB '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
 }
 failure {
-  slackSend (color: '#FF0000', message: "${env.OPERATION} FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
+  slackSend (color : '#FF0000', message : "${env.OPERATION} FAILED : JOB '${env.JOB_NAME} [${env.BUILD_NUMBER}]' for ${env.ENVIRONMENT} (${env.BUILD_URL})")
 }
 }
 }
