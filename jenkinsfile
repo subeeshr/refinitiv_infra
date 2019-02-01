@@ -9,7 +9,7 @@ agent any
       stage('Checkout code') {
           steps{
               checkout([
-                $class : 'GitSCM', branches : [[name: '*/terraform']],
+                $class : 'GitSCM', branches : [[name: '*/terraform', name: '*/master']],
                 userRemoteConfigs: [[url: 'https://github.com/subeeshr/refinitiv_infra.git', credentialsId: 'git_pass']]])
          }
   }
